@@ -1,0 +1,371 @@
+<Project>
+  <Name>BitBacktester</Name>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>Untitled</Name>
+    <Language>Java</Language>
+    <Entities>
+      <Entity type="Class">
+        <Name>Backtest</Name>
+        <Access>Public</Access>
+        <Location left="1387" top="10" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private RiskManager riskManager</Member>
+        <Member type="Field">private StrategyPerformance performance</Member>
+        <Member type="Field">private TradingStrategy strategy</Member>
+        <Member type="Method">public void run()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>DataFeed</Name>
+        <Access>Public</Access>
+        <Location left="1387" top="523" />
+        <Size width="162" height="139" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private HistoricalData data</Member>
+        <Member type="Field">private int index</Member>
+        <Member type="Method">public Tick get()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>TradingStrategy</Name>
+        <Access>Public</Access>
+        <Location left="1387" top="262" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private RiskManager riskManager</Member>
+        <Member type="Field">private Broker broker</Member>
+        <Member type="Field">private DataFeed dataFeed</Member>
+        <Member type="Method">public void run()</Member>
+        <Member type="Method">public abstract void algo()</Member>
+        <Modifier>Abstract</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>HistoricalData</Name>
+        <Access>Public</Access>
+        <Location left="1368" top="739" />
+        <Size width="204" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private List&lt;Tick&gt; data</Member>
+        <Member type="Method">public Tick getTick(LocalDateTime time)</Member>
+        <Member type="Method">public Tick getTick(int index)</Member>
+        <Member type="Method">public Tick getLastTick()</Member>
+        <Member type="Method">public int size()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>RiskManager</Name>
+        <Access>Public</Access>
+        <Location left="1636" top="262" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Broker</Name>
+        <Access>Public</Access>
+        <Location left="1001" top="504" />
+        <Size width="272" height="181" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public void limitBuy(double amount, double price)</Member>
+        <Member type="Method">public void limitBuy(LimitOrder order)</Member>
+        <Member type="Method">public void limitSell(double amount, double price)</Member>
+        <Member type="Method">public void limitSell(LimitOrder order)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Tick</Name>
+        <Access>Public</Access>
+        <Location left="1387" top="1012" />
+        <Size width="162" height="298" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private LocalDateTime datetime</Member>
+        <Member type="Field">private double open</Member>
+        <Member type="Field">private double high</Member>
+        <Member type="Field">private double low</Member>
+        <Member type="Field">private double close</Member>
+        <Member type="Field">private long volume</Member>
+        <Member type="Method">public double getOpen()</Member>
+        <Member type="Method">public double getHigh()</Member>
+        <Member type="Method">public double getLow()</Member>
+        <Member type="Method">public double getClose()</Member>
+        <Member type="Method">public LocalDateTime getTime()</Member>
+        <Member type="Method">public long getVolume()</Member>
+        <Member type="Method">public double getValue()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>TSElement</Name>
+        <Access>Public</Access>
+        <Location left="1666" top="945" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private double value</Member>
+        <Member type="Constructor">public TSElement()</Member>
+        <Member type="Constructor">public TSElement(double value)</Member>
+        <Member type="Method">public double getValue()</Member>
+        <Member type="Method">public void setValue(int value)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Position</Name>
+        <Access>Public</Access>
+        <Location left="688" top="765" />
+        <Size width="207" height="235" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private List&lt;Order&gt; openingOrders</Member>
+        <Member type="Field">private String asset</Member>
+        <Member type="Field">private List&lt;Order&gt; closingOrders</Member>
+        <Member type="Method">public void add(Order o)</Member>
+        <Member type="Method">public boolean isOpen()</Member>
+        <Member type="Method">public double getRealizedPercentGain()</Member>
+        <Member type="Method">public Order getOpeningOrder()</Member>
+        <Member type="Method">public double geRealizedPnL()</Member>
+        <Member type="Method">public void getAsset()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>LongPosition</Name>
+        <Access>Public</Access>
+        <Location left="504" top="1008" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public double getRealizedPercentGain()</Member>
+        <Member type="Method">public double geRealizedPnL()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>ShortPosition</Name>
+        <Access>Public</Access>
+        <Location left="907" top="1012" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Order</Name>
+        <Access>Public</Access>
+        <Location left="710" top="1030" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private double amount</Member>
+        <Member type="Field">private double price</Member>
+        <Member type="Field">private LocalDateTime datetime</Member>
+        <Member type="Method">public double getAmount()</Member>
+        <Member type="Method">public double getPrice()</Member>
+        <Member type="Method">public double getValue()</Member>
+        <Member type="Method">public LocalDateTime getTime()</Member>
+        <Modifier>Abstract</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>LimitOrder</Name>
+        <Access>Public</Access>
+        <Location left="603" top="1255" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Constructor">public LimitOrder(LocalDateTIme datetime, double amount, double price)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>MarketOrder</Name>
+        <Access>Public</Access>
+        <Location left="818" top="1255" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Comment">
+        <Text>TODO
+</Text>
+        <Location left="1016" top="1395" />
+        <Size width="50" height="75" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>The main class for running a backtest. Contains all info relating to test.
+</Text>
+        <Location left="1597" top="10" />
+        <Size width="160" height="75" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>Used to enforce Risk Managment on the strategy. In its most primitive form it will be in control of position sizing.</Text>
+        <Location left="1835" top="181" />
+        <Size width="120" height="111" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>TradingStrategy should be inherited by any class that wants to create a strat. Logic is in algo().</Text>
+        <Location left="1172" top="235" />
+        <Size width="147" height="75" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>Designed to be used in live trading. For now it is just a wrapper for HistoricalData.</Text>
+        <Location left="1607" top="632" />
+        <Size width="146" height="76" />
+      </Entity>
+      <Entity type="Class">
+        <Name>Portfolio</Name>
+        <Access>Public</Access>
+        <Location left="709" top="489" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private double initialCash</Member>
+        <Member type="Field">private double currentCash</Member>
+        <Member type="Field">private double currentAmount</Member>
+        <Member type="Field">private List&lt;Position&gt; positions</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Comment">
+        <Text>If Order is of type ASK, amount (&amp; consequently value) will be negative.</Text>
+        <Location left="417" top="1278" />
+        <Size width="160" height="75" />
+      </Entity>
+      <Entity type="Class">
+        <Name>LimitBuyOrder</Name>
+        <Access>Public</Access>
+        <Location left="504" top="1486" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>LimitSellOrder</Name>
+        <Access>Public</Access>
+        <Location left="688" top="1486" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+    </Entities>
+    <Relationships>
+      <Relationship type="Association" first="2" second="1">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="0" second="4">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="2" second="4">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="0" second="2">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="1" second="3">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+      </Relationship>
+      <Relationship type="Generalization" first="6" second="7">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Association" first="3" second="6">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+      </Relationship>
+      <Relationship type="Generalization" first="9" second="8">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="10" second="8">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Comment" first="14" second="13">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="12" second="11">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="13" second="11">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Association" first="2" second="5">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="8" second="11">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+      </Relationship>
+      <Relationship type="Comment" first="15" second="0">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Comment" first="16" second="4">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Comment" first="17" second="2">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Comment" first="18" second="1">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Association" first="5" second="19">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="19" second="8">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+      </Relationship>
+      <Relationship type="Comment" first="20" second="11">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Association" first="22" second="12">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="21" second="12">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+      </Relationship>
+    </Relationships>
+  </ProjectItem>
+</Project>
