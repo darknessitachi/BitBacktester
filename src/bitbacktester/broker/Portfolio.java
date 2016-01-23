@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  *
- * @author jmaciak
+ * @author jmaciaks
  */
 public class Portfolio {
     List<Position> positions;
@@ -39,7 +39,7 @@ public class Portfolio {
      * @throws OrderCantCloseException 
      * @throws bitbacktester.InvalidOrderTypeException 
      */
-    public void add(Order o) throws InsufficientFundsException, CantCreatePositionException, OrderCantCloseException, InvalidOrderTypeException {
+    protected void add(Order o) throws InsufficientFundsException, CantCreatePositionException, OrderCantCloseException, InvalidOrderTypeException {
         Position foundPosition = findExistingPosition(o);
         if(!sufficientFunds(o)) {
             throw new InsufficientFundsException("Order " + o + " greater than current funds.");
