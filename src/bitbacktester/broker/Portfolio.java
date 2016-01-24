@@ -27,8 +27,19 @@ public class Portfolio {
         this.currentCash = initialCash;
         
     }
+    /**
+     * Returns a list of all positions.
+     * @return 
+     */
     public List<Position> getPositions() {
         return positions;
+    }
+     /**
+     * Returns the current amount of cash in the portfolio.
+     * @return 
+     */
+    public double getCash() {
+        return this.currentCash;
     }
     /**
      * Adds an order to the portfolio, either opening a new position or adding 
@@ -126,6 +137,10 @@ public class Portfolio {
         return sum + currentCash;
                 
     }
+    /**
+     * Returns the number of open positions.
+     * @return 
+     */
     public int getNumOpenPositions() {
         int num = 0;
         for(Position p : positions) {
