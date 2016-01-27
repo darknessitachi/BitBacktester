@@ -7,6 +7,7 @@ package bitbacktester.positions;
 
 import bitbacktester.orders.Order;
 import bitbacktester.orders.OrderType;
+import bitbacktester.riskmanagement.StopLoss;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ public abstract class Position {
     protected List<Order> openingOrders;
     protected List<Order> closingOrders;
     private String asset;
+    protected StopLoss stopLoss;
     private PositionType type;
     
     public Position() {
@@ -60,6 +62,15 @@ public abstract class Position {
     }
     public PositionType getType() {
         return type;
+    }
+    /**
+     * Creates a new stop-loss at the price given. This is the point where
+     * the position will be closed.
+     * @param price 
+     */
+    public abstract void setStopLoss(double price);
+    public StopLoss getStopLoss() {
+        return stopLoss;
     }
     /**
      * Calculates the amount of the position that is outstanding. (not closed by

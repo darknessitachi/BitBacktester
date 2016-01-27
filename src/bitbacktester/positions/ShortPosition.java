@@ -2,6 +2,7 @@ package bitbacktester.positions;
 
 import bitbacktester.orders.Order;
 import bitbacktester.orders.OrderType;
+import bitbacktester.riskmanagement.ShortStopLoss;
 
 /**
  * @author jmaciak
@@ -66,6 +67,11 @@ public class ShortPosition extends Position {
     @Override
     public double calcUnrealizedValue(double currentPrice) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setStopLoss(double price) {
+        this.stopLoss = new ShortStopLoss(price);
     }
     
 }

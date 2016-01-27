@@ -7,6 +7,7 @@ package bitbacktester.positions;
 
 import bitbacktester.orders.Order;
 import bitbacktester.orders.OrderType;
+import bitbacktester.riskmanagement.LongStopLoss;
 
 /**
  *
@@ -88,5 +89,10 @@ public class LongPosition extends Position {
         if(o.getType().equals(OrderType.SHORT) || o.getType().equals(OrderType.COVER))
             return false;
         return ! (o.getType().equals(OrderType.SELL) && o.getAmount() > this.calcAmountOutstanding());
+    }
+
+    @Override
+    public void setStopLoss(double price) {
+        this.stopLoss = new LongStopLoss(price);
     }
 }
