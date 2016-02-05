@@ -41,6 +41,12 @@ public class Portfolio {
     public double getCash() {
         return this.currentCash;
     }
+    public double getInitialCash() {
+        return initialCash;
+    }
+    public double getAmount() {
+        return this.currentAmount;
+    }
     /**
      * Adds an order to the portfolio, either opening a new position or adding 
      * to an already open one.
@@ -53,7 +59,7 @@ public class Portfolio {
     protected void add(Order o) throws InsufficientFundsException, CantCreatePositionException, OrderCantCloseException, InvalidOrderTypeException {
         Position foundPosition = findExistingPosition(o);
         if(!sufficientFunds(o)) {
-            throw new InsufficientFundsException("Order " + o + " greater than current funds.");
+            throw new InsufficientFundsException("Order " + o + " greater than current funds " + this.currentCash);
         }
         
         if(foundPosition == null) {
@@ -67,16 +73,18 @@ public class Portfolio {
             if(o.getType().equals(OrderType.BUY) || o.getType().equals(OrderType.SHORT)) {
                 currentCash -= o.getValue();
                 currentAmount += o.getAmount();
+                positions.add(o.createPosition());
             }
             if(o.getType().equals(OrderType.COVER)) {
                 currentCash += o.getValue() + foundPosition.calcOpeningValue();
                 currentAmount -= o.getAmount();
+                foundPosition.add(o);
             }
             if(o.getType().equals(OrderType.SELL)) {
                 currentCash += o.getValue();
                 currentAmount -= o.getAmount();
+                foundPosition.add(o);
             }
-            foundPosition.add(o);
         }
         //Subtract fee from current cash regardless of order type
         currentCash -= o.getFee().calc();
@@ -132,7 +140,7 @@ public class Portfolio {
     public double markToMarket(DataFeed df) {
         double sum = 0;
         for(Position p : positions) {
-            sum += p.calcValue(df.getTick().getClose());
+            sum += p.calcUnrealizedValue(df.getTick().getClose());
         }
         return sum + currentCash;
                 
@@ -149,6 +157,7 @@ public class Portfolio {
         }
         return num;
     } 
+    
     @Override
     public String toString() {
         return "Portfolio{initialCash=" + initialCash + ", currentCash=" + currentCash + ", currentAmount=" + currentAmount + ", realizedPnL=" + calcRealizedPnL() + "}";
