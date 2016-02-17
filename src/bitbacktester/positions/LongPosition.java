@@ -53,7 +53,7 @@ public class LongPosition extends Position {
 
     @Override
     public double calcUnrealizedPercentGain(double currentPrice) {
-        return 0;
+        return -1;
     }
     @Override
     public double calcUnrealizedValue(double currentPrice) {

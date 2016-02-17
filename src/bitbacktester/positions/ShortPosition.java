@@ -39,10 +39,7 @@ public class ShortPosition extends Position {
         }
         return calcOpeningValue() - calcClosingValue();
     }
-    /*@Override
-    public double calcNetValue() {
-        return calcOpeningValue() - calcClosingValue();
-    }*/
+
     @Override
     public double calcUnrealizedPnL(double currentPrice) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -66,7 +63,7 @@ public class ShortPosition extends Position {
 
     @Override
     public double calcUnrealizedValue(double currentPrice) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return calcOpeningValue() + (this.calcOpeningValue() - (calcAmountOutstanding() * currentPrice));
     }
 
     @Override
