@@ -76,7 +76,7 @@ public class Portfolio {
                 positions.add(o.createPosition());
             }
             if(o.getType().equals(OrderType.COVER)) {
-                currentCash += o.getValue() + foundPosition.calcOpeningValue();
+                currentCash += foundPosition.calcOpeningValue() + (foundPosition.calcOpeningValue() - o.getValue());
                 currentAmount -= o.getAmount();
                 foundPosition.add(o);
             }
