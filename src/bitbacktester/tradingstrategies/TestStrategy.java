@@ -2,9 +2,10 @@ package bitbacktester.tradingstrategies;
 
 import bitbacktester.InsufficientFundsException;
 import bitbacktester.InvalidOrderTypeException;
-import bitbacktester.RiskManager;
+import bitbacktester.riskmanagement.RiskManager;
 import bitbacktester.broker.Broker;
 import bitbacktester.datafeed.DataFeed;
+import bitbacktester.datafeed.HistoricalData;
 import bitbacktester.datafeed.Tick;
 import bitbacktester.orders.CantCreatePositionException;
 import bitbacktester.positions.OrderCantCloseException;
@@ -17,20 +18,27 @@ public class TestStrategy extends TradingStrategy {
 
     public TestStrategy(Broker broker, RiskManager riskManager, DataFeed dataFeed) {
         super(broker, riskManager, dataFeed);
-        this.setLogToConsole(true);
     }
 
     @Override
     protected void onBar(Tick tick) throws InsufficientFundsException, InvalidOrderTypeException, CantCreatePositionException, OrderCantCloseException {
-        if(dataFeed.getHistory().getLastTick() != null) {
-            if(tick.getClose() > dataFeed.getHistory().getLastTick().getClose() && broker.getPortfolio().getNumOpenPositions() == 0) {
-                    broker.limitBuyOrder("BTCCNY", 1, tick.getClose());
-                    log(LogType.INFO, tick, "Bought 1 BTC @ " + tick.getClose() + " CNY");
+        if(dataFeed.getHistory().size() > 200) {
+            if(calcMA(dataFeed, 100) >= calcMA(dataFeed, 200) && broker.getPortfolio().getNumOpenPositions() == 0) {
+                
+                broker.limitBuyOrder("BTCCNY", broker.getPortfolio().getCash() / tick.getClose(), tick.getClose());
             }
-            else {
-                log(LogType.INFO, tick, "Portfolio market value:" + broker.getPortfolio().markToMarket(dataFeed) + " Position pnl:" + broker.getPortfolio().getPositions().get(0).calcUnrealizedPnL(dataFeed.getTick().getClose()));
+            if(calcMA(dataFeed, 100) < calcMA(dataFeed, 200) && broker.getPortfolio().getNumOpenPositions() > 0) {
+                broker.limitSellOrder("BTCCNY", broker.getPortfolio().getAmount() , tick.getClose());
             }
         }
+    }
+    private double calcMA(DataFeed df, int length) {
+        HistoricalData data = df.getHistory();
+        double sum = df.getTick().getClose();
+        for(int i = 1; i < length; ++i) {
+            sum += data.getTick(data.size() - i).getClose();
+        }
+        return sum / length;
     }
     
 }
