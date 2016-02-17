@@ -14,25 +14,22 @@ import java.util.List;
  * @author jmaciak
  */
 public class TimeSeries {
-    /*private String name;
+    private String name;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
     private Duration elementDuration;
     private List<TSElement> d;
     
-    public TimeSeries(String name, LocalDateTime startDateTime, LocalDateTime endDateTime, Duration elementDuration, List<TSElement> data) {
-        this.name = name;
-        this.startDateTime = startDateTime;
-        this.endDateTime = endDateTime;
-        this.elementDuration = elementDuration;
-        this.d = data;
-    }
-    public TimeSeries() {
-        this.d = new ArrayList<>();
-    }
     public TimeSeries(String name, List<TSElement> data) {
         this.name = name;
         this.d = data;
+    }
+    public TimeSeries(String name) {
+        this.name = name;
+        this.d = new ArrayList<>();
+    }
+    public TimeSeries() {
+        this.d = new ArrayList<>();
     }
     public void add(TSElement element) {
         d.add(element);
@@ -58,9 +55,9 @@ public class TimeSeries {
     public TSElement getLast() {
         return d.get(d.size() - 1);
     }
-    public MovingAverage getMovingAverage(int length) {
-        return new MovingAverage(length, this);
-    }
+    //public MovingAverage getMovingAverage(int length) {
+    //    return new MovingAverage(length, this);
+    //}
     public static List<Double> toList(TimeSeries ts) {
         List<Double> list = new ArrayList<>();
         for(int i = 0; i < ts.size(); ++i) {
@@ -68,13 +65,20 @@ public class TimeSeries {
         }
         return list;
     }  
+    public List<TSElement> toList() {
+        return d;
+    }
     @Override public String toString() {
         String s = "[" + name + "] Start:" + startDateTime + " End: " + endDateTime + " Element Duration: " + elementDuration + " = {" ;
         for(int i = 0; i < d.size(); ++i) {
-            s += "\n";
+            s += ", ";
             s += d.get(i);
         }
         s += " }";
         return s;
-    }*/
+    }
+
+    public String getName() {
+        return name;
+    }
 }
