@@ -95,7 +95,7 @@ public class HistoricalData {
      */
     public HistoricalData getBefore(int index) {
         List<Tick> ticks = new ArrayList<>();
-        for(int i = 0; i < index - 1; ++i) {
+        for(int i = 0; i < index; ++i) {
             ticks.add(data.get(i));
         }
         return new HistoricalData(ticks);
@@ -144,7 +144,7 @@ public class HistoricalData {
                 minuteTick = new Tick(LocalDateTime.ofEpochSecond(t.getDatetime().toEpochSecond(ZoneOffset.UTC) - t.getDatetime().getSecond(), 0, ZoneOffset.UTC));
                 minuteTick.setLow(10000); //Magic really big number
             }
-            if( t.getDatetime().getMinute() > time.getMinute() ) {
+            if( t.getDatetime().getMinute() != time.getMinute() ) {
                 time = t.getDatetime();
                 highestSeconds = 0;
                 lowestSeconds  = 60;
@@ -172,6 +172,47 @@ public class HistoricalData {
         }
         minuteTicks.add(minuteTick);
         return new HistoricalData(minuteTicks);
+    }
+    public static HistoricalData toHour(HistoricalData data) {
+        LocalDateTime time = null;
+        List<Tick> hourTicks = new ArrayList<>();
+        int highestMinutes = 0;
+        int lowestMinutes  = 60;
+        Tick hourTick = null;
+        for(Tick t : data.toList()) {
+            if(time == null) {
+                time = t.getDatetime();
+                hourTick = new Tick(LocalDateTime.ofEpochSecond(t.getDatetime().toEpochSecond(ZoneOffset.UTC) - t.getDatetime().getMinute() * 60 - t.getDatetime().getSecond(), 0, ZoneOffset.UTC));
+                hourTick.setLow(10000); //Magic really big number
+            }
+            if( t.getDatetime().getHour() != time.getHour() ) {
+                time = t.getDatetime();
+                highestMinutes = 0;
+                lowestMinutes  = 60;
+                hourTicks.add(hourTick);
+                hourTick = new Tick(LocalDateTime.ofEpochSecond(t.getDatetime().toEpochSecond(ZoneOffset.UTC) - t.getDatetime().getMinute()*60 - t.getDatetime().getSecond(), 0, ZoneOffset.UTC));
+                hourTick.setLow(10000); //Magic really big number
+            }
+            if(t.getDatetime().getHour() == time.getHour()) {
+                if(t.getDatetime().getMinute() < lowestMinutes) {
+                    hourTick.setOpen(t.getClose());
+                    lowestMinutes = t.getDatetime().getMinute();
+                }
+                if(t.getDatetime().getMinute() > highestMinutes) {
+                    hourTick.setClose(t.getClose());
+                    highestMinutes = t.getDatetime().getMinute();
+                }
+                if(t.getHigh() >= hourTick.getHigh()) {
+                    hourTick.setHigh(t.getHigh());
+                }
+                if(t.getLow() <= hourTick.getLow()) {
+                    hourTick.setLow(t.getLow());
+                }
+                hourTick.setVolume(hourTick.getVolume() + t.getVolume());
+            }
+        }
+        hourTicks.add(hourTick);
+        return new HistoricalData(hourTicks);
     }
     public List<Tick> toList() {
         return data;

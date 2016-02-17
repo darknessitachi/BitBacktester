@@ -29,7 +29,7 @@ public class LocalDataFeed extends DataFeed {
 
     @Override
     public boolean hasNext() {
-        return incrementer < data.size();
+        return incrementer + 1 < data.size();
     }
     /**
      * Gets tick at

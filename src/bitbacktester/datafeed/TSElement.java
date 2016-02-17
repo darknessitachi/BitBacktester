@@ -34,6 +34,6 @@ public class TSElement {
         return value;
     }
     @Override public String toString() {
-        return datetime + "|" + value;
+        return "TSElement{time="+ datetime + ", value=" + value + "}";
     }
 }
