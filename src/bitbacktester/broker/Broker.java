@@ -43,22 +43,20 @@ public class Broker {
         portfolio.add(o);
     }
     public void limitBuyOrder(String asset, double amount, double price) throws InsufficientFundsException, CantCreatePositionException, OrderCantCloseException, InvalidOrderTypeException {
-        System.out.println("Origamount: " + amount + "Round:" + Math.floor(amount * 1000) / 1000);
-        placeOrder(new LimitBuyOrder(dataFeed.getTick().getDatetime(), asset, Math.floor(amount * 1000) / 1000, price)); //Math.floor ensures amount is in 3 decimal places
+        placeOrder(new LimitBuyOrder(dataFeed.getTick().getDatetime(), asset, Math.floor(amount * 100) / 100, price)); //Math.floor ensures amount is in 3 decimal places
     }
     public void limitSellOrder(String asset, double amount, double price) throws InsufficientFundsException, CantCreatePositionException, OrderCantCloseException, InvalidOrderTypeException {
-                System.out.println("Origamount: " + amount + "Round:" + Math.floor(amount * 1000) / 1000);
-        placeOrder(new LimitSellOrder(dataFeed.getTick().getDatetime(), asset, Math.floor(amount * 1000) / 1000, price));
+                //System.out.println("Origamount: " + amount + "Round:" + Math.floor(amount * 100) / 100);
+        placeOrder(new LimitSellOrder(dataFeed.getTick().getDatetime(), asset, amount, price));
     }
     public void limitShortOrder(String asset, double amount, double price) throws InsufficientFundsException, CantCreatePositionException, OrderCantCloseException, InvalidOrderTypeException {
-                System.out.println("Origamount: " + amount + "Round:" + Math.floor(amount * 1000) / 1000);
+                //System.out.println("Origamount: " + amount + "Round:" + Math.floor(amount * 100) / 100);
 
-        placeOrder(new LimitShortOrder(dataFeed.getTick().getDatetime(), asset, Math.floor(amount * 1000) / 1000, price));
+        placeOrder(new LimitShortOrder(dataFeed.getTick().getDatetime(), asset, Math.floor(amount * 100) / 100, price));
     }
     public void limitCoverOrder(String asset, double amount, double price) throws InsufficientFundsException, CantCreatePositionException, OrderCantCloseException, InvalidOrderTypeException {
-                System.out.println("Origamount: " + amount + "Round:" + Math.floor(amount * 1000) / 1000);
-
-        placeOrder(new LimitCoverOrder(dataFeed.getTick().getDatetime(), asset, Math.floor(amount * 1000) / 1000, price));
+                //System.out.println("Origamount: " + amount + "Round:" + Math.floor(amount * 100) / 100);
+        placeOrder(new LimitCoverOrder(dataFeed.getTick().getDatetime(), asset, amount, price));
     }
     public Portfolio getPortfolio() {
         return portfolio;
