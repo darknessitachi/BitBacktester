@@ -61,14 +61,38 @@ public class ShortPosition extends Position {
         return !(o.getType().equals(OrderType.COVER) && o.getAmount() > this.calcAmountOutstanding());
     }
 
+    /**
+     * Calculates the value of the unclosed portion of a position.
+     * @param currentPrice
+     * @return 
+     */
     @Override
     public double calcUnrealizedValue(double currentPrice) {
+        if(calcAmountOutstanding() == 0) 
+            return 0;
         return calcOpeningValue() + (this.calcOpeningValue() - (calcAmountOutstanding() * currentPrice));
     }
 
     @Override
     public void setStopLoss(double price) {
         this.stopLoss = new ShortStopLoss(price);
+    }
+    @Override
+    public String toString() {
+        String s = "ShortPosition{timeOpened=";
+        s += getTimeOpened();
+        s += ", openingOrders=[";
+        for(Order o : openingOrders) {
+            s += o + ", ";
+        }
+        s += "], closingOrders=[";
+        for(Order o : closingOrders) {
+           s += o + ", ";        
+        }
+        s += "], realizedPnL=";
+        s += calcRealizedPnL();
+        s += "}";
+        return s;
     }
     
 }
