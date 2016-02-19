@@ -140,7 +140,8 @@ public class Portfolio {
     public double markToMarket(DataFeed df) {
         double sum = 0;
         for(Position p : positions) {
-            sum += p.calcUnrealizedValue(df.getTick().getClose());
+            if(p.isOpen())
+                sum += p.calcUnrealizedValue(df.getTick().getClose());
         }
         return sum + currentCash;
                 
