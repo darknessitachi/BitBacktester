@@ -1,5 +1,7 @@
 package bitbacktester.datafeed;
 
+import java.time.LocalDateTime;
+
 /**
  *
  * @author jmaciak
@@ -17,6 +19,11 @@ public abstract class DataFeed {
      * @return 
      */
     public abstract Tick get();
+    /**
+     * Set the point at which the DataFeed starts.
+     * @param time
+     */
+    public abstract void setDataStart(LocalDateTime time);
     /**
      * Returns all of the data since feed started.
      * @return 

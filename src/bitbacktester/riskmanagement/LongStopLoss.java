@@ -13,8 +13,8 @@ import bitbacktester.orders.Order;
  * @author jmaciak
  */
 public class LongStopLoss extends StopLoss {
-    public LongStopLoss(double price) {
-        super(price);
+    public LongStopLoss(String asset, double price) {
+        super(asset, price);
     }
 
     @Override
@@ -24,6 +24,6 @@ public class LongStopLoss extends StopLoss {
 
     @Override
     public Order createOrder() {
-        return new LimitSellOrder("", 0, getPrice());
+        return new LimitSellOrder(getAsset(), 0, getPrice());
     }
 }

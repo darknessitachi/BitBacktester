@@ -23,6 +23,7 @@ public class RiskManager {
     private final Broker broker;
     private final DataFeed dataFeed;
     private PositionSizer positionSizer;
+    private final static Logger LOGGER = Logger.getLogger(RiskManager.class.getName()); 
     
     public RiskManager(Broker broker, DataFeed dataFeed) {
         this.broker   = broker;
@@ -55,19 +56,17 @@ public class RiskManager {
      */
     public void checkStopLosses() {
         for(Position p : broker.getPortfolio().getPositions()) {
+            if(p.getStopLoss() == null) { //Skip check
+                continue;
+            }
             if(p.isOpen() && p.getStopLoss().isHit(dataFeed.getTick().getClose())) {
+                LOGGER.log(Level.INFO, "Stop @ {0} is hit. Closing position.", p.getStopLoss().getPrice());
                 Order o = p.getStopLoss().createOrder();
                 o.setAmount(p.calcAmountOutstanding());
                 try {
                     broker.placeOrder(o);
-                } catch (InsufficientFundsException ex) {
-                    Logger.getLogger(RiskManager.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (CantCreatePositionException ex) {
-                    Logger.getLogger(RiskManager.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (OrderCantCloseException ex) {
-                    Logger.getLogger(RiskManager.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (InvalidOrderTypeException ex) {
-                    Logger.getLogger(RiskManager.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InsufficientFundsException | CantCreatePositionException | OrderCantCloseException | InvalidOrderTypeException ex) {
+                    LOGGER.log(Level.SEVERE, "{0}", ex);
                 }
             }
         }

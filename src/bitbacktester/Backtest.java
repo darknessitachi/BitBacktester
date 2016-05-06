@@ -5,6 +5,7 @@
  */
 package bitbacktester;
 
+import bitbacktester.riskmanagement.RiskManager;
 import bitbacktester.tradingstrategies.TradingStrategy;
 import bitbacktester.broker.Portfolio;
 

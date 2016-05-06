@@ -13,12 +13,17 @@ import bitbacktester.orders.Order;
  */
 public abstract class StopLoss {
     private final double price;
+    private final String asset;
     
-    public StopLoss(double price) {
+    public StopLoss(String asset, double price) {
+        this.asset = asset;
         this.price = price;
     }
     public double getPrice() {
         return price;
+    }
+    public String getAsset() {
+        return asset;
     }
     /**
      * Creates the order to fill the remaining position.

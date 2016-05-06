@@ -14,15 +14,16 @@ import bitbacktester.orders.Order;
  */
 public class ShortStopLoss extends StopLoss {
 
-    public ShortStopLoss(double price) {
-        super(price);
+    public ShortStopLoss(String asset, double price) {
+        super(asset, price);
     }
+    @Override
     public boolean isHit(double currentPrice) {
         return (currentPrice >= super.getPrice());
     } 
 
     @Override
     public Order createOrder() {
-        return new LimitCoverOrder("", 0, getPrice());
+        return new LimitCoverOrder(getAsset(), 0, getPrice());
     }
 }

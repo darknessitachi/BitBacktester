@@ -79,6 +79,9 @@ public class HistoricalData {
     public HistoricalData(List<Tick> data) {
         this.data = data;
     }
+    public HistoricalData() {
+        this.data = new ArrayList<>();
+    }
     public int size() {
         return data.size();
     }
@@ -218,7 +221,7 @@ public class HistoricalData {
         return data;
     }
     /**
-     * Returns the tick at the specified time.s
+     * Returns the tick at the specified time.
      * @param time
      * @return 
      */
@@ -229,5 +232,18 @@ public class HistoricalData {
             }
         }
         return null;
+    }
+    /**
+     * Returns the index of the tick at the given time.
+     * @param time
+     * @return 
+     */
+    public int getIndexOf(LocalDateTime time) {
+        for(int i = 0; i < data.size(); ++i) {
+            if(data.get(i).getDatetime().equals(time)) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

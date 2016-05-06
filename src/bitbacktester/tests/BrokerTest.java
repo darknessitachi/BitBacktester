@@ -21,8 +21,8 @@ import bitbacktester.positions.OrderCantCloseException;
  */
 public class BrokerTest {
     public static void test() throws InsufficientFundsException, CantCreatePositionException, OrderCantCloseException, InvalidOrderTypeException {
-        Broker b = new Broker(new Portfolio(10), new PercentFee(.00));
-        b.placeOrder(new LimitBuyOrder("ASSET", 1, 5.00));
-        System.out.println(b);
+       // Broker b = new Broker(new Portfolio(10), new PercentFee(.00));
+       // b.placeOrder(new LimitBuyOrder("ASSET", 1, 5.00));
+       // System.out.println(b);
     }
 }

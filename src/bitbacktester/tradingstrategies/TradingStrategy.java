@@ -53,6 +53,7 @@ public abstract class TradingStrategy {
             Tick t = dataFeed.getTick();
             try {
                 onBar(t);
+                riskManager.checkStopLosses();
             } catch (InsufficientFundsException | InvalidOrderTypeException | CantCreatePositionException | OrderCantCloseException ex) {
                 LOGGER.log(Level.SEVERE, ex.getMessage());
             }

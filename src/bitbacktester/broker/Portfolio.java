@@ -51,12 +51,13 @@ public class Portfolio {
      * Adds an order to the portfolio, either opening a new position or adding 
      * to an already open one.
      * @param o
+     * @return 
      * @throws InsufficientFundsException
      * @throws CantCreatePositionException
      * @throws OrderCantCloseException 
      * @throws bitbacktester.InvalidOrderTypeException 
      */
-    protected void add(Order o) throws InsufficientFundsException, CantCreatePositionException, OrderCantCloseException, InvalidOrderTypeException {
+    protected Position add(Order o) throws InsufficientFundsException, CantCreatePositionException, OrderCantCloseException, InvalidOrderTypeException {
         Position foundPosition = findExistingPosition(o);
         if(!sufficientFunds(o)) {
             throw new InsufficientFundsException("Order " + o + " greater than current funds " + this.currentCash);
@@ -68,7 +69,12 @@ public class Portfolio {
             }
             currentCash -= o.getValue();
             currentAmount += o.getAmount();
-            positions.add(o.createPosition());
+            Position newPosition = o.createPosition();
+            positions.add(newPosition);
+            //Subtract fee from current cash regardless of order type
+            currentCash -= o.getFee().calc();
+            
+            return newPosition;
         } else {
             if(o.getType().equals(OrderType.BUY) || o.getType().equals(OrderType.SHORT)) {
                 currentCash -= o.getValue();
@@ -85,9 +91,10 @@ public class Portfolio {
                 currentAmount -= o.getAmount();
                 foundPosition.add(o);
             }
+            //Subtract fee from current cash regardless of order type
+            currentCash -= o.getFee().calc();
+            return foundPosition;
         }
-        //Subtract fee from current cash regardless of order type
-        currentCash -= o.getFee().calc();
     }
     /**
      * Determines whether or not there are sufficient funds to open a position.

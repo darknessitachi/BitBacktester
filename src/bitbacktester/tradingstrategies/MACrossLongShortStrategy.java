@@ -34,20 +34,19 @@ public class MACrossLongShortStrategy extends TradingStrategy {
     protected void onBar(Tick tick) throws InsufficientFundsException, InvalidOrderTypeException, CantCreatePositionException, OrderCantCloseException {
         if(this.dataFeed.getHistory().size() >= 199) {
             if(calcMA(100) >= calcMA(200)) {
-                if(broker.getPortfolio().getNumOpenPositions() > 0) { //If there is a position open
+                if(broker.getPortfolio().getNumOpenPositions() == 1) { //If there is a position open
                     for(Position p : broker.getPortfolio().getPositions()) { 
-                        if(p.getType().equals(PositionType.LONG) && p.isOpen()) { //If position is Long, do nothing
-                         
+                        if(p.getType().equals(PositionType.LONG) && p.isOpen()) { //If position is Long, do nothings            
                         }
                         if(p.getType().equals(PositionType.SHORT) && p.isOpen()) { //If short, close position b/c trend changed.
                             broker.limitCoverOrder(ASSET, p.calcAmountOutstanding(), tick.getClose());
                         }
                     }
                 } else {
-                    broker.limitBuyOrder(ASSET, broker.getPortfolio().getCash() / tick.getClose(), tick.getClose());
+                    broker.limitBuyOrder(ASSET, broker.getPortfolio().getCash() / tick.getClose() * .1, tick.getClose()).setStopLoss(tick.getClose() - tick.getClose() * .05);
                 }
             } else {
-                if(broker.getPortfolio().getNumOpenPositions() > 0) { //If there is a position open
+                if(broker.getPortfolio().getNumOpenPositions() == 1) { //If there is a position open
                     for(Position p : broker.getPortfolio().getPositions()) { 
                         if(p.getType().equals(PositionType.LONG) && p.isOpen()) { //If position is long, close
                             broker.limitSellOrder(ASSET, p.calcAmountOutstanding(), tick.getClose());
@@ -57,7 +56,7 @@ public class MACrossLongShortStrategy extends TradingStrategy {
                         }
                     }
                 } else {
-                    broker.limitShortOrder(ASSET, broker.getPortfolio().getCash() / tick.getClose(), tick.getClose()); 
+                    broker.limitShortOrder(ASSET, broker.getPortfolio().getCash() / tick.getClose() * .1, tick.getClose()).setStopLoss(tick.getClose() + tick.getClose() * .05); 
                 }
             }
         }

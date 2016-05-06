@@ -21,11 +21,11 @@ import bitbacktester.positions.OrderCantCloseException;
  */
 public class PortfolioTest {
     public static void test() throws InsufficientFundsException, CantCreatePositionException, OrderCantCloseException, InvalidOrderTypeException {
-        Portfolio portfolio = new Portfolio(100.00);
+        /*Portfolio portfolio = new Portfolio(100.00);
         System.out.println(portfolio);
         portfolio.add(new LimitBuyOrder("ASSET", 1, 10.0));
         System.out.println(portfolio);
         portfolio.add(new LimitSellOrder("ASSET", 1, 20.0));
         System.out.println(portfolio);
-    }
+    */}
 }

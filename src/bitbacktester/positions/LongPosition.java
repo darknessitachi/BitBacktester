@@ -93,6 +93,6 @@ public class LongPosition extends Position {
 
     @Override
     public void setStopLoss(double price) {
-        this.stopLoss = new LongStopLoss(price);
+        this.stopLoss = new LongStopLoss(getAsset(), price);
     }
 }

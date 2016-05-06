@@ -22,7 +22,7 @@ public class Tick extends TSElement {
         this.volume = volume;
     }
 
-    Tick(LocalDateTime time) {
+    public Tick(LocalDateTime time) {
         super(time, 0);
     }
     public double getOpen() {

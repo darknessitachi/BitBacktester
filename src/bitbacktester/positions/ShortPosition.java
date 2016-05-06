@@ -75,7 +75,7 @@ public class ShortPosition extends Position {
 
     @Override
     public void setStopLoss(double price) {
-        this.stopLoss = new ShortStopLoss(price);
+        this.stopLoss = new ShortStopLoss(getAsset(), price);
     }
     @Override
     public String toString() {

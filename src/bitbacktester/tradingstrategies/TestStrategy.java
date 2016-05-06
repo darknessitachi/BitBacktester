@@ -22,23 +22,9 @@ public class TestStrategy extends TradingStrategy {
 
     @Override
     protected void onBar(Tick tick) throws InsufficientFundsException, InvalidOrderTypeException, CantCreatePositionException, OrderCantCloseException {
-        if(dataFeed.getHistory().size() > 200) {
-            if(calcMA(dataFeed, 100) >= calcMA(dataFeed, 200) && broker.getPortfolio().getNumOpenPositions() == 0) {
-                
-                broker.limitBuyOrder("BTCCNY", broker.getPortfolio().getCash() / tick.getClose(), tick.getClose());
-            }
-            if(calcMA(dataFeed, 100) < calcMA(dataFeed, 200) && broker.getPortfolio().getNumOpenPositions() > 0) {
-                broker.limitSellOrder("BTCCNY", broker.getPortfolio().getAmount() , tick.getClose());
-            }
+        if(dataFeed.getHistory().size() == 0) {
+            broker.limitBuyOrder("BTCCNY", 1, tick.getClose());
+            broker.getPortfolio().getPositions().get(0).setStopLoss(tick.getClose() - 1.0);
         }
     }
-    private double calcMA(DataFeed df, int length) {
-        HistoricalData data = df.getHistory();
-        double sum = df.getTick().getClose();
-        for(int i = 1; i < length; ++i) {
-            sum += data.getTick(data.size() - i).getClose();
-        }
-        return sum / length;
-    }
-    
 }

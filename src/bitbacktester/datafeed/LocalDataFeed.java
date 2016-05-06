@@ -5,6 +5,8 @@
  */
 package bitbacktester.datafeed;
 
+import java.time.LocalDateTime;
+
 /**
  *
  * @author jmaciak
@@ -44,6 +46,11 @@ public class LocalDataFeed extends DataFeed {
     @Override
     public void next() {
         ++incrementer;
+    }
+
+    @Override
+    public void setDataStart(LocalDateTime time) {
+        this.incrementer = data.getIndexOf(time);
     }
     
 }
